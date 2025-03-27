@@ -1,0 +1,13 @@
+{
+  "name": "mrw-featured-image-focal-point",
+  "version": "0.1.0",
+  "author": "Mark Root-Wiley",
+  "authorURI": "https://MRWweb.com",
+  "scripts": {
+    "start": "wp-scripts start src/js/focal-point-picker.js --output-path=js --output-filename=focal-point-picker.js"
+  },
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^17.12.0",
+    "@wordpress/scripts": "^30.14.0"
+  }
+}
