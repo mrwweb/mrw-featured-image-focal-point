@@ -7,7 +7,7 @@ Adds a focal point picker for the Featured Image in the Post sidebar of the Bloc
 ## Installation
 
 ```sh
-$ wp plugin install --activate https://github.com/mrwweb/mrw-featured-image-focal-point/archive/refs/heads/main.zip
+wp plugin install --activate https://github.com/mrwweb/mrw-featured-image-focal-point/archive/refs/heads/main.zip
 ```
 
 ## History & Credits
