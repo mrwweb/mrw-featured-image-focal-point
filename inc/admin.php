@@ -7,11 +7,11 @@
 
 namespace MRW\FeaturedImageFocalPoint;
 
-add_action( 'init', __NAMESPACE__ . '\featured_image_focal_point_post_meta' );
+add_action( 'init', __NAMESPACE__ . '\register_focal_point_meta' );
 /**
  * Register post meta for featured image focal point
  */
-function featured_image_focal_point_post_meta() {
+function register_focal_point_meta() {
 	register_post_meta( '', 'featured_image_focal_point', array(
 		'type' => 'object',
 		'description' => 'Focal point of the featured image',
@@ -30,6 +30,30 @@ function featured_image_focal_point_post_meta() {
 			),
 		),
 	) );
+}
+
+add_action( 'init', __NAMESPACE__ . '\post_type_support', 9999 );
+/**
+ * Automatically add support for custom-fields to any post type that supports thumbnails
+ *
+ * @return void
+ */
+function post_type_support() {
+	/**
+	 * Filter the post types that will have custom-fields support added
+	 * 
+	 * @param string[] $post_types array of post type names
+	 * 
+	 * @since 0.2.0
+	 */
+	$post_types = apply_filters(
+		'mrw_featured_image_focal_point_post_types', 
+		get_post_types_by_support( 'thumbnail' )
+	);
+
+	foreach ( $post_types as $post_type ) {
+		add_post_type_support( esc_attr( $post_type ), 'custom-fields' );
+	}
 }
 
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\editor_assets' );

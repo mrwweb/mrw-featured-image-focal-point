@@ -1,5 +1,7 @@
 # MRW Featured Image Focal Point Picker
 
+v0.2.0
+
 Mark Root-Wiley, [MRW Web Design](https://MRWweb.com/)
 
 Adds a focal point picker for the Featured Image in the Post sidebar of the Block Editor. Applies `object-position` inline style with the selected focal point for the Post Featured Image block or templated featured images (i.e. `the_post_thumbnail()`).
