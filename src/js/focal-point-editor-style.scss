@@ -1,0 +1,4 @@
+.use-featured-image-focal-point .wp-block-media-text__media img,
+.use-featured-image-focal-point.wp-block-post-featured-image img {
+    object-position: var(--featured-image-focal-point) !important;
+}

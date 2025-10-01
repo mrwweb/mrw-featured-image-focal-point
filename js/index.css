@@ -1,0 +1,10 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/js/focal-point-editor-style.scss ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+.use-featured-image-focal-point .wp-block-media-text__media img,
+.use-featured-image-focal-point.wp-block-post-featured-image img {
+  -o-object-position: var(--featured-image-focal-point) !important;
+     object-position: var(--featured-image-focal-point) !important;
+}
+
+/*# sourceMappingURL=index.css.map*/

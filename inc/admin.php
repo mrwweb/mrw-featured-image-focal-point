@@ -70,5 +70,12 @@ function editor_assets() {
 		$asset_file['version'],
 		true
 	);
+
+	wp_enqueue_style(
+		'mrw-focal-point-editor-style',
+		plugins_url( 'js/index.css', dirname(__FILE__) ),
+		array(),
+		$asset_file['version'],
+	);
     
 }

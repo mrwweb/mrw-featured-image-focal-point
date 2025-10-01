@@ -13,8 +13,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -28,34 +31,141 @@ const addFeaturedImageObjectPosition = (0,_wordpress_compose__WEBPACK_IMPORTED_M
   return props => {
     const {
       name,
-      style
+      style,
+      className,
+      attributes: {
+        useFeaturedImage,
+        focalPoint
+      }
     } = props;
     const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
-    if (name !== 'core/post-featured-image') {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
+    if (!(name === 'core/post-featured-image' || name === 'core/media-text' && useFeaturedImage && focalPoint === undefined)) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
         ...props
       });
     }
     const [meta] = useEntityProp('postType', getPostType(), 'meta');
-    if (!meta.hasOwnProperty('featured_image_focal_point')) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
+    if (meta === undefined || !meta.hasOwnProperty('featured_image_focal_point')) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
         ...props
       });
     }
     const newStyles = Object.assign(style || {}, {
-      objectPosition: `${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}%`
+      '--featured-image-focal-point': `${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}%`
     });
     const wrapperProps = {
       ...props.wrapperProps,
-      style: newStyles
+      style: newStyles,
+      className: className + ' use-featured-image-focal-point '
     };
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
       ...props,
       wrapperProps: wrapperProps
     });
   };
 }, 'addFeaturedImageObjectPosition');
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('editor.BlockListBlock', 'mrw/featured-image-focal-point', addFeaturedImageObjectPosition);
+
+/***/ }),
+
+/***/ "./src/js/focal-point-editor-style.scss":
+/*!**********************************************!*\
+  !*** ./src/js/focal-point-editor-style.scss ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/js/focal-point-picker.js":
+/*!**************************************!*\
+  !*** ./src/js/focal-point-picker.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _add_block_inline_style_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-block-inline-style.js */ "./src/js/add-block-inline-style.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const {
+  __
+} = wp.i18n;
+const {
+  addFilter
+} = wp.hooks;
+const {
+  Fragment
+} = wp.element;
+const {
+  createHigherOrderComponent
+} = wp.compose;
+const {
+  FocalPointPicker,
+  PanelBody
+} = wp.components;
+const {
+  useEntityProp
+} = wp.coreData;
+
+/**
+ * Add Focal Point Picker to Featured Image on posts.
+ *
+ * @param {Function} PostFeaturedImage Featured Image component.
+ *
+ * @return {Function} PostFeaturedImage Modified Featured Image component.
+ */
+const wrapPostFeaturedImage = createHigherOrderComponent(PostFeaturedImage => {
+  return props => {
+    const {
+      media
+    } = props;
+    const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
+    const [meta, setMeta] = useEntityProp('postType', getPostType(), 'meta');
+    const setFocalPointMeta = val => {
+      setMeta(Object.assign({}, meta, {
+        featured_image_focal_point: val
+      }));
+    };
+    if (media && media.source_url) {
+      const url = media.source_url;
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("style", {
+          children: `
+                            .mrw-featured-image-focal-point {
+                                margin-inline: -16px;
+                                overflow: clip; /* focal point picker thumb can cause overflow when placed on edge of image */
+                            }
+                            .editor-post-featured-image__preview-image {
+                                object-position: ${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}% !important;
+                            }`
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PostFeaturedImage, {
+          ...props
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PanelBody, {
+          name: "featured-image-focal-point",
+          title: "Featured Image Focal Point",
+          initialOpen: false,
+          className: "mrw-featured-image-focal-point",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(FocalPointPicker, {
+            label: __('Focal point picker'),
+            url: url,
+            value: meta.featured_image_focal_point,
+            __nextHasNoMarginBottom: true,
+            onChange: newFocalPoint => setFocalPointMeta(newFocalPoint)
+          })
+        })]
+      });
+    }
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PostFeaturedImage, {
+      ...props
+    });
+  };
+}, 'wrapPostFeaturedImage');
+addFilter('editor.PostFeaturedImage', 'mrw/featured-image-control', wrapPostFeaturedImage);
 
 /***/ }),
 
@@ -76,6 +186,16 @@ module.exports = window["wp"]["compose"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["hooks"];
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = window["React"];
 
 /***/ }),
 
@@ -160,90 +280,16 @@ module.exports = window["ReactJSXRuntime"];
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!**************************************!*\
-  !*** ./src/js/focal-point-picker.js ***!
-  \**************************************/
+/*!*************************!*\
+  !*** ./src/js/index.js ***!
+  \*************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _add_block_inline_style_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-block-inline-style.js */ "./src/js/add-block-inline-style.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _add_block_inline_style__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-block-inline-style */ "./src/js/add-block-inline-style.js");
+/* harmony import */ var _focal_point_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./focal-point-picker */ "./src/js/focal-point-picker.js");
+/* harmony import */ var _focal_point_editor_style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./focal-point-editor-style.scss */ "./src/js/focal-point-editor-style.scss");
 
 
-const {
-  __
-} = wp.i18n;
-const {
-  addFilter
-} = wp.hooks;
-const {
-  Fragment
-} = wp.element;
-const {
-  createHigherOrderComponent
-} = wp.compose;
-const {
-  FocalPointPicker,
-  PanelBody
-} = wp.components;
-const {
-  useEntityProp
-} = wp.coreData;
 
-/**
- * Add Focal Point Picker to Featured Image on posts.
- *
- * @param {Function} PostFeaturedImage Featured Image component.
- *
- * @return {Function} PostFeaturedImage Modified Featured Image component.
- */
-const wrapPostFeaturedImage = createHigherOrderComponent(PostFeaturedImage => {
-  return props => {
-    const {
-      media
-    } = props;
-    const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
-    const [meta, setMeta] = useEntityProp('postType', getPostType(), 'meta');
-    const setFocalPointMeta = val => {
-      setMeta(Object.assign({}, meta, {
-        featured_image_focal_point: val
-      }));
-    };
-    if (media && media.source_url) {
-      const url = media.source_url;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(Fragment, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("style", {
-          children: `
-                            .mrw-featured-image-focal-point {
-                                margin-inline: -16px;
-                                overflow: clip; /* focal point picker thumb can cause overflow when placed on edge of image */
-                            }
-                            .editor-post-featured-image__preview-image,
-                            .wp-block-post-featured-image img {
-                                object-position: ${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}% !important;
-                            }`
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PostFeaturedImage, {
-          ...props
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PanelBody, {
-          name: "featured-image-focal-point",
-          title: "Featured Image Focal Point",
-          initialOpen: false,
-          className: "mrw-featured-image-focal-point",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(FocalPointPicker, {
-            label: __('Focal point picker'),
-            url: url,
-            value: meta.featured_image_focal_point,
-            __nextHasNoMarginBottom: true,
-            onChange: newFocalPoint => setFocalPointMeta(newFocalPoint)
-          })
-        })]
-      });
-    }
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(PostFeaturedImage, {
-      ...props
-    });
-  };
-}, 'wrapPostFeaturedImage');
-addFilter('editor.PostFeaturedImage', 'mrw/featured-image-control', wrapPostFeaturedImage);
 })();
 
 /******/ })()

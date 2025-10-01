@@ -15,60 +15,59 @@ const { useEntityProp } = wp.coreData;
  * @return {Function} PostFeaturedImage Modified Featured Image component.
  */
 const wrapPostFeaturedImage = createHigherOrderComponent(
-	( PostFeaturedImage ) => {
-		return ( props ) => {
+	(PostFeaturedImage) => {
+		return (props) => {
 			const { media } = props;
 			const getPostType = () =>
-				wp.data.select( 'core/editor' ).getCurrentPostType();
+				wp.data.select('core/editor').getCurrentPostType();
 
-			const [ meta, setMeta ] = useEntityProp(
+			const [meta, setMeta] = useEntityProp(
 				'postType',
 				getPostType(),
 				'meta'
 			);
 
-			const setFocalPointMeta = ( val ) => {
+			const setFocalPointMeta = (val) => {
 				setMeta(
-					Object.assign( {}, meta, {
+					Object.assign({}, meta, {
 						featured_image_focal_point: val,
-					} )
+					})
 				);
 			};
 
-			if ( media && media.source_url ) {
+			if (media && media.source_url) {
 				const url = media.source_url;
 
 				return (
 					<Fragment>
 						<style>
-							{ `
+							{`
                             .mrw-featured-image-focal-point {
                                 margin-inline: -16px;
                                 overflow: clip; /* focal point picker thumb can cause overflow when placed on edge of image */
                             }
-                            .editor-post-featured-image__preview-image,
-                            .wp-block-post-featured-image img {
+                            .editor-post-featured-image__preview-image {
                                 object-position: ${
 									meta.featured_image_focal_point.x * 100
 								}% ${
 									meta.featured_image_focal_point.y * 100
 								}% !important;
-                            }` }
+                            }`}
 						</style>
-						<PostFeaturedImage { ...props } />
+						<PostFeaturedImage {...props} />
 						<PanelBody
 							name="featured-image-focal-point"
 							title="Featured Image Focal Point"
-							initialOpen={ false }
+							initialOpen={false}
 							className="mrw-featured-image-focal-point"
 						>
 							<FocalPointPicker
-								label={ __( 'Focal point picker' ) }
-								url={ url }
-								value={ meta.featured_image_focal_point }
-								__nextHasNoMarginBottom={ true }
-								onChange={ ( newFocalPoint ) =>
-									setFocalPointMeta( newFocalPoint )
+								label={__('Focal point picker')}
+								url={url}
+								value={meta.featured_image_focal_point}
+								__nextHasNoMarginBottom={true}
+								onChange={(newFocalPoint) =>
+									setFocalPointMeta(newFocalPoint)
 								}
 							/>
 						</PanelBody>
@@ -76,7 +75,7 @@ const wrapPostFeaturedImage = createHigherOrderComponent(
 				);
 			}
 
-			return <PostFeaturedImage { ...props } />;
+			return <PostFeaturedImage {...props} />;
 		};
 	},
 	'wrapPostFeaturedImage'
