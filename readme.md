@@ -4,7 +4,7 @@ v0.3.0
 
 Mark Root-Wiley, [MRW Web Design](https://MRWweb.com/)
 
-Adds a focal point picker for the Featured Image in the Post sidebar of the Block Editor. Applies `object-position` inline style with the selected focal point for the Post Featured Image block or templated featured images (i.e. `the_post_thumbnail()`).
+Adds a focal point picker for the Featured Image in the Post sidebar of the Block Editor. Applies `object-position` inline style with the selected focal point for the Post Featured Image block, Media & Text block using the Featured Image, and templated featured images (i.e. `the_post_thumbnail()`).
 
 ## Installation
 
@@ -20,7 +20,7 @@ This plugin took that work and added the front-end style output, block style out
 
 ## Changelog
 
-### v0.3.0
+### v0.3.0 (1 Oct 2025)
 
 - Add support for focal point on Media & Text blocks displaying the Featured Image if the featured image has a focal point but the block doesn't
 - First some editor errors when meta context isn't defined. I think this closes #2
@@ -28,3 +28,7 @@ This plugin took that work and added the front-end style output, block style out
 ### v0.2.0
 
 - Automatically add `custom-fields` support to post types that support `thumbnail`
+
+### v0.1.0
+
+- Initial release
