@@ -6,7 +6,7 @@
  * Author URI:      https://MRWweb.com
  * Text Domain:     mrw-featured-image-focal-point
  * Domain Path:     /languages
- * Version:         0.3.0
+ * Version:         0.3.1
  *
  * @package         MRW_Featured_Image_Focal_Point
  */

@@ -16,7 +16,7 @@ function post_thumbnail_focal_point( $html, $post_id ) {
         $processor = new WP_HTML_Tag_Processor( $html );
         if( $processor->next_tag( 'img' ) ) {
             $existing_styles = $processor->get_attribute( 'style' );
-            if( ! str_contains( $existing_styles, 'object-position' ) ) {
+            if( $existing_styles && ! str_contains( $existing_styles, 'object-position' ) ) {
                 $processor->set_attribute( 'style', $existing_styles . ' ' . $focal_point );
                 $html = $processor->get_updated_html();
             }
