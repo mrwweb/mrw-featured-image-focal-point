@@ -20,6 +20,11 @@ This plugin took that work and added the front-end style output, block style out
 
 ## Changelog
 
+### v0.3.2 (November 14, 2025)
+
+- Correctly load editor styles into the iframe
+- Remove unused import
+
 ### v0.3.1 (7 Oct 2025)
 
 - Fix passing null to `str_contains()` in certain cases of the featured image on the front end.
