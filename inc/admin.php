@@ -61,7 +61,6 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\editor_assets' );
  * Enqueue the styles and scripts that customize the block editor
  */
 function editor_assets() {
-
 	$asset_file = include plugin_dir_path( dirname( __FILE__ ) ) . '/js/focal-point-picker.asset.php';
 	wp_enqueue_script(
 		'mrw-focal-point-picker',
@@ -70,12 +69,22 @@ function editor_assets() {
 		$asset_file['version'],
 		true
 	);
+}
 
-	wp_enqueue_style(
-		'mrw-focal-point-editor-style',
-		plugins_url( 'js/index.css', dirname(__FILE__) ),
-		array(),
-		$asset_file['version'],
-	);
-    
+add_action( 'enqueue_block_assets', __NAMESPACE__ . '\editor_styles' );
+/**
+ * Styles to make Featured Image and Media & Text blocks use the focal point in the editor
+ *
+ * @return void
+ */
+function editor_styles() {
+	if( is_admin() ) {
+		$asset_file = include plugin_dir_path( dirname( __FILE__ ) ) . '/js/focal-point-picker.asset.php';
+		wp_enqueue_style(
+			'mrw-focal-point-editor-style',
+			plugins_url( 'js/index.css', dirname(__FILE__) ),
+			array(),
+			$asset_file['version'],
+		);
+	}
 }
