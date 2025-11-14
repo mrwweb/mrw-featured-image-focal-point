@@ -1,6 +1,5 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
-import { use } from 'react';
 const { useEntityProp } = wp.coreData;
 /**
  * Add CSS classes to the block in the editor (but not the save object to avoid issues with block validation)
