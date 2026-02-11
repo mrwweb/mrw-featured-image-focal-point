@@ -1,6 +1,6 @@
 # MRW Featured Image Focal Point Picker
 
-v0.3.2
+v0.3.3.1
 
 Mark Root-Wiley, [MRW Web Design](https://MRWweb.com/)
 
@@ -19,6 +19,10 @@ Immense props are due to everyone who contributed code on the [issue requesting 
 This plugin took that work and added the front-end style output, block style output, an improved editor UI (in my opinion), and the ability to work with post types other than `post`.
 
 ## Changelog
+
+### v0.3.3.1 (February 11, 2026)
+
+- Avoid error for blocks that don't have any wrapper styles
 
 ### v0.3.3 (February 11, 2026)
 

@@ -47,7 +47,7 @@ const addFeaturedImageObjectPosition = (0,_wordpress_compose__WEBPACK_IMPORTED_M
         ...props
       });
     }
-    const newStyles = Object.assign(wrapperProps.style || {}, {
+    const newStyles = Object.assign(wrapperProps?.style || {}, {
       '--featured-image-focal-point': `${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}%`
     });
     const newWrapperProps = {
