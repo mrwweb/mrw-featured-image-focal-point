@@ -9,10 +9,11 @@ const addFeaturedImageObjectPosition = createHigherOrderComponent(
 		return (props) => {
 			const {
 				name,
-				style,
 				className,
 				attributes: { useFeaturedImage, focalPoint },
+				wrapperProps,
 			} = props;
+
 			const getPostType = () =>
 				wp.data.select('core/editor').getCurrentPostType();
 
@@ -35,19 +36,19 @@ const addFeaturedImageObjectPosition = createHigherOrderComponent(
 				return <BlockListBlock {...props} />;
 			}
 
-			const newStyles = Object.assign(style || {}, {
+			const newStyles = Object.assign(wrapperProps.style || {}, {
 				'--featured-image-focal-point': `${
 					meta.featured_image_focal_point.x * 100
 				}% ${meta.featured_image_focal_point.y * 100}%`,
 			});
 
-			const wrapperProps = {
+			const newWrapperProps = {
 				...props.wrapperProps,
 				style: newStyles,
 				className: className + ' use-featured-image-focal-point ',
 			};
 
-			return <BlockListBlock {...props} wrapperProps={wrapperProps} />;
+			return <BlockListBlock {...props} wrapperProps={newWrapperProps} />;
 		};
 	},
 	'addFeaturedImageObjectPosition'

@@ -13,11 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
-
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
@@ -31,36 +28,36 @@ const addFeaturedImageObjectPosition = (0,_wordpress_compose__WEBPACK_IMPORTED_M
   return props => {
     const {
       name,
-      style,
       className,
       attributes: {
         useFeaturedImage,
         focalPoint
-      }
+      },
+      wrapperProps
     } = props;
     const getPostType = () => wp.data.select('core/editor').getCurrentPostType();
     if (!(name === 'core/post-featured-image' || name === 'core/media-text' && useFeaturedImage && focalPoint === undefined)) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
         ...props
       });
     }
     const [meta] = useEntityProp('postType', getPostType(), 'meta');
     if (meta === undefined || !meta.hasOwnProperty('featured_image_focal_point')) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
         ...props
       });
     }
-    const newStyles = Object.assign(style || {}, {
+    const newStyles = Object.assign(wrapperProps.style || {}, {
       '--featured-image-focal-point': `${meta.featured_image_focal_point.x * 100}% ${meta.featured_image_focal_point.y * 100}%`
     });
-    const wrapperProps = {
+    const newWrapperProps = {
       ...props.wrapperProps,
       style: newStyles,
       className: className + ' use-featured-image-focal-point '
     };
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(BlockListBlock, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BlockListBlock, {
       ...props,
-      wrapperProps: wrapperProps
+      wrapperProps: newWrapperProps
     });
   };
 }, 'addFeaturedImageObjectPosition');
@@ -186,16 +183,6 @@ module.exports = window["wp"]["compose"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["hooks"];
-
-/***/ }),
-
-/***/ "react":
-/*!************************!*\
-  !*** external "React" ***!
-  \************************/
-/***/ ((module) => {
-
-module.exports = window["React"];
 
 /***/ }),
 
